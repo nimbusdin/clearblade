@@ -1,6 +1,7 @@
 from clearblade.ClearBladeCore import System, Query, Developer
 import subprocess
 import ast
+import time
 
 
 class ClearBladeMQTTSocket(object):
@@ -68,6 +69,7 @@ class ClearBladeSocket(object):
         cpuinfo = ClearBladeSocket.cpuinfo()
         cpuinfodict = ast.literal_eval(cpuinfo)
         myMQTT.publish("CPU_Info", cpuinfodict)
+        time.sleep(1)
         # myService.execute(myUser, cpuinfodict)
         myMQTT.unsubscribe("CPU_Info")
         myMQTT.disconnect()
