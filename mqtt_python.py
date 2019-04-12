@@ -53,14 +53,14 @@ class ClearBladeSocket(object):
         DeviceActiveKey = "sQ8crd9g37p44f1Lkb799ISa"
         
         # Code Service
-        ServiceName = "mqtt"
+        # ServiceName = "mqtt"
 
         # myClearBladeSockets
         mySystem = ClearBladeSystemSocket(SystemKey, SystemSecret).system
         myUser = ClearBladeUserSocket(mySystem, User, Password).user
         myDevice = ClearBladeDeviceSocket(mySystem, DeviceName, DeviceActiveKey).device
         myMQTT = ClearBladeMQTTSocket(mySystem, myUser).mqtt
-        myService = ClearBladeCodeServiceSocket(mySystem, ServiceName).service
+        # myService = ClearBladeCodeServiceSocket(mySystem, ServiceName).service
         
         # Connect and Publish and Execute
         myMQTT.connect()
@@ -68,7 +68,7 @@ class ClearBladeSocket(object):
         cpuinfo = ClearBladeSocket.cpuinfo()
         cpuinfodict = ast.literal_eval(cpuinfo)
         myMQTT.publish("CPU_Info", cpuinfo)
-        myService.execute(myUser, cpuinfodict)
+        #myService.execute(myUser, cpuinfodict)
         myMQTT.unsubscribe("CPU_Info")
         myMQTT.disconnect()
 
