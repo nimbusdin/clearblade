@@ -68,7 +68,7 @@ class ClearBladeSocket(object):
         myMQTT.subscribe("CPU_Info")
         cpuinfo = ClearBladeSocket.cpuinfo()
         cpuinfodict = ast.literal_eval(cpuinfo)
-        myMQTT.publish("CPU_Info", cpuinfodict)
+        myMQTT.publish("CPU_Info", cpuinfo)
         time.sleep(1)
         # myService.execute(myUser, cpuinfodict)
         myMQTT.unsubscribe("CPU_Info")
