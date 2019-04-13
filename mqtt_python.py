@@ -75,7 +75,7 @@ class ClearBladeSocket(object):
         myMQTT.disconnect()
 
     def cpuinfo():
-        command = ['lscpu', '-J']
+        command = ['free', '-w']
         p = subprocess.Popen(command, stdout=subprocess.PIPE)
         text = p.stdout.read()
         retcode = p.wait()
