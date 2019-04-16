@@ -1,7 +1,10 @@
 function mqtt(req, resp) {
-  var val = req.params.lscpu;
-  ClearBlade.init({request:req});
+  ClearBlade.init({request: req});
   var collection = ClearBlade.Collection({collectionName:"mqtt"});
+  var collection_ID = ClearBlade.Collection({collectionID:"b4c0d5ca0bdcdea0b2fa90848c5c"})
+  var val = req.params.body;
+  val = JSON.parse(val);
+  val = val["lscpu"];
   var callback = function (err, data) {
     if (err) {
       resp.error("error creating new row: " + JSON.stringify(data));
@@ -9,18 +12,16 @@ function mqtt(req, resp) {
       resp.success(data);
     }
   }
-  //resp.success(val.length);
   specs = {};
   for (i = 0; i < val.length; i++) {
     col_name = val[i]["field"];
     col_name = col_name.replace(/ /g, '_');
     col_name = col_name.replace(/[()-:]/g, '');
-    collection.addColumn(col_name);
     col_value = val[i]["data"];
     specs[col_name] = col_value
   }
-  var newRow = {
-    lscpu: JSON.stringify(specs)
-  };
-  collection.create(newRow, callback);
+  var new_row = {
+      "lscpu": JSON.stringify(specs)
+  }
+  collection.create(new_row, callback);
 }
