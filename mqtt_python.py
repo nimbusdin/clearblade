@@ -67,19 +67,18 @@ class ClearBladeSocket(object):
         myMQTT.connect()
         myMQTT.subscribe("CPU_Info")
         cpuinfo = ClearBladeSocket.cpuinfo()
-        cpuinfodict = ast.literal_eval(cpuinfo)
         myMQTT.publish("CPU_Info", cpuinfo)
         time.sleep(1)
-        # myService.execute(myUser, cpuinfodict)
         myMQTT.unsubscribe("CPU_Info")
         myMQTT.disconnect()
 
     def cpuinfo():
-        command = ['free', '-w']
+        command = ['lscpu', '-J']
         p = subprocess.Popen(command, stdout=subprocess.PIPE)
         text = p.stdout.read()
-        retcode = p.wait()
         result = text.decode("utf-8")
+        result = result.replace('\n', '')
+        result = result.replace('\r', '')
         return result
 
 
